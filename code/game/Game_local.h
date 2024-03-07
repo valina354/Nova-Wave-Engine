@@ -54,7 +54,7 @@ extern idSoundWorld *				gameSoundWorld;
 extern idSoundWorld *			gameSoundWorldBuf;
 
 // the "gameversion" client command will print this plus compile date
-#define	GAME_VERSION		"The Dark Mod"
+#define	GAME_VERSION		"Ghostly Descent"
 
 // classes used by idGameLocal
 class idEntity;
