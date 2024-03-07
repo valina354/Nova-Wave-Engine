@@ -127,6 +127,7 @@ private:
 	static idCVar		con_speed;
 	static idCVar		con_notifyTime;
 	static idCVar		con_noPrint;
+	static idCVar		con_size;
 
 	const idMaterial *	whiteShader;
 	const idMaterial *	consoleShader;
@@ -145,6 +146,7 @@ static const char *con_noPrint_defaultValue = "0";
 idCVar idConsoleLocal::con_speed( "con_speed", "3", CVAR_SYSTEM, "speed at which the console moves up and down" );
 idCVar idConsoleLocal::con_notifyTime( "con_notifyTime", "3", CVAR_SYSTEM, "time messages are displayed onscreen when console is pulled up" );
 idCVar idConsoleLocal::con_noPrint( "con_noPrint", con_noPrint_defaultValue, CVAR_BOOL|CVAR_SYSTEM|CVAR_NOCHEAT, "print on the console but not onscreen when console is pulled up");
+idCVar idConsoleLocal::con_size("con_size", "0.5", CVAR_SYSTEM | CVAR_FLOAT | CVAR_NOCHEAT, "screen size of console");
 idCVarBool con_noWrap( "con_noWrap", "0", CVAR_SYSTEM | CVAR_NOCHEAT, "no wrap; long string to be truncated" );
 
 /*
@@ -801,7 +803,13 @@ bool idConsoleLocal::ProcessEvent( const sysEvent_t *event, bool forceAccept ) {
 					// if the shift key is down, don't open the console as much
 					SetDisplayFraction( 0.2f );
 			} else {
-				SetDisplayFraction( 0.5f );
+				float consoleSize = con_size.GetFloat();
+				if (consoleSize < 0.1f)
+					consoleSize = 0.1f;
+				if (consoleSize > 1.0f)
+					consoleSize = 1.0f;
+
+				SetDisplayFraction(consoleSize);
 			}
 			cvarSystem->SetCVarBool( "ui_chat", true );
 		}

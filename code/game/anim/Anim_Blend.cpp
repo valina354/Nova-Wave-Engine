@@ -3299,6 +3299,8 @@ void idDeclModelDef::SetupJoints( int *numJoints, idJointMat **jointList, idBoun
 	list = (idJointMat *) Mem_Alloc16( num * sizeof( list[0] ) );
 	pose = GetDefaultPose();
 
+
+
 	// convert the joint quaternions to joint matrices
 	SIMDProcessor->ConvertJointQuatsToJointMats( list, pose, joints.Num() );
 

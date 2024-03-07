@@ -119,6 +119,8 @@ protected:
 	static idCVar				r_slopNormal;			// merge normals that dot less than this
 };
 
+
+
 /*
 ===============================================================================
 
