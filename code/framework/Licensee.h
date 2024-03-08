@@ -21,30 +21,30 @@ Project: The Dark Mod (http://www.thedarkmod.com/)
 ===============================================================================
 */
 
-#define GAME_NAME		"The Dark Mod"	// appears on window titles and errors
+#define GAME_NAME		"Ghostly Descent"	// appears on window titles and errors
 
 // greebo: Defines the darkmod release version
-#define TDM_VERSION_MAJOR	2
-#define TDM_VERSION_MINOR	12
+#define TDM_VERSION_MAJOR	0
+#define TDM_VERSION_MINOR	1
 #define GAME_API_VERSION	TDM_VERSION_MAJOR * 100 + TDM_VERSION_MINOR	// e.g. 210
-#define ENGINE_VERSION		"TDM 2.12"	// printed in console
+#define ENGINE_VERSION		"Ghostly Descent 0.01 ALPHA"	// printed in console
 
 // paths
 #define	BASE_GAMEDIR					"base"
-#define BASE_TDM					"darkmod"
+#define BASE_TDM					"GD"
 
 // filenames
-#define CONFIG_FILE					"Darkmod.cfg"
-#define KEYBINDS_FILE				"DarkmodKeybinds.cfg"
-#define PADBINDS_FILE				"DarkmodPadbinds.cfg"
+#define CONFIG_FILE					"GD.cfg"
+#define KEYBINDS_FILE				"GDKeybinds.cfg"
+#define PADBINDS_FILE				"GDPadbinds.cfg"
 
 // base folder where the source code lives
-#define SOURCE_CODE_BASE_FOLDER				"darkmod_src"
+#define SOURCE_CODE_BASE_FOLDER				"GhostlyDescent_src"
 
 
 // default idnet host address
 #ifndef IDNET_HOST
-	#define IDNET_HOST				"tdmnet.thedarkmod.com"
+	#define IDNET_HOST				""
 #endif
 
 // default idnet master port
@@ -81,9 +81,9 @@ Project: The Dark Mod (http://www.thedarkmod.com/)
 #define EDITOR_WINDOWTEXT				"DarkEdit"
 
 // win32 info
-#define WIN32_CONSOLE_CLASS				"TDM WinConsole"
-#define	WIN32_WINDOW_CLASS_NAME				"TDM"
-#define	WIN32_FAKE_WINDOW_CLASS_NAME			"TDM_WGL_FAKE"
+#define WIN32_CONSOLE_CLASS				"GD WinConsole"
+#define	WIN32_WINDOW_CLASS_NAME				"GD"
+#define	WIN32_FAKE_WINDOW_CLASS_NAME			"GD_WGL_FAKE"
 
 // Linux info
 #define LINUX_DEFAULT_PATH				"."	

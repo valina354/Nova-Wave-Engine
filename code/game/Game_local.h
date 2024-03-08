@@ -21,7 +21,7 @@ Project: The Dark Mod (http://www.thedarkmod.com/)
 // enables water physics
 #define MOD_WATERPHYSICS
 
-//enable development mode
+//enables development mode
 #define _DEVELOPMENTBUILD
 
 /*
