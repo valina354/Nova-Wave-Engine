@@ -26,7 +26,7 @@ Project: The Dark Mod (http://www.thedarkmod.com/)
 #include "renderer/backend/FrameBufferManager.h"
 #include "renderer/backend/FrameBuffer.h"
 
-idCVar r_bloom("r_bloom", "0", CVAR_BOOL | CVAR_RENDERER | CVAR_ARCHIVE, "Enable Bloom effect");
+idCVar r_bloom("r_bloom", "1", CVAR_BOOL | CVAR_RENDERER | CVAR_ARCHIVE, "Enable Bloom effect");
 idCVar r_bloom_threshold("r_bloom_threshold", "0.7", CVAR_FLOAT | CVAR_RENDERER | CVAR_ARCHIVE, "Brightness threshold for Bloom effect");
 idCVar r_bloom_threshold_falloff("r_bloom_threshold_falloff", "8", CVAR_FLOAT | CVAR_RENDERER | CVAR_ARCHIVE, "Exponential factor with which values below the brightness threshold fall off");
 idCVar r_bloom_detailblend("r_bloom_detailblend", "0.5", CVAR_FLOAT | CVAR_RENDERER | CVAR_ARCHIVE, "Blend factor for mixing detail into the blurred Bloom result");
