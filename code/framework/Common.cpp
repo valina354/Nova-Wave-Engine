@@ -152,7 +152,10 @@ bool			com_outputMsg = false;
 unsigned int	com_msgID = -1;
 #endif
 
-
+#ifdef __DOOM_DLL__
+idGame *		game = NULL;
+idGameEdit *	gameEdit = NULL;
+#endif
 
 void Com_Crash_f( const idCmdArgs &args );
 
@@ -2700,6 +2703,65 @@ idCommonLocal::LoadGameDLL
 =================
 */
 void idCommonLocal::LoadGameDLL( void ) {
+#ifdef __DOOM_DLL__
+	char			dllPath[ MAX_OSPATH ];
+	gameImport_t	gameImport;
+	gameExport_t	gameExport;
+	GetGameAPI_t	GetGameAPI;
+
+	memset(dllPath, 0, sizeof(dllPath));
+
+	fileSystem->FindDLL( "game", dllPath, true );
+
+	if ( !dllPath[0] ) {
+		common->FatalError( "couldn't find game dynamic library" );
+		return;
+	}
+
+	common->DPrintf( "Loading game DLL: '%s'\n", dllPath );
+	gameDLL = sys->DLL_Load( dllPath );
+	if ( !gameDLL ) {
+		common->FatalError( "couldn't load game dynamic library" );
+		return;
+	}
+
+	GetGameAPI = (GetGameAPI_t) Sys_DLL_GetProcAddress( gameDLL, "GetGameAPI" );
+	if ( !GetGameAPI ) {
+		Sys_DLL_Unload( gameDLL );
+		gameDLL = NULL;
+		common->FatalError( "couldn't find game DLL API" );
+		return;
+	}
+
+	gameImport.version					= GAME_API_VERSION;
+	gameImport.sys						= ::sys;
+	gameImport.common					= ::common;
+	gameImport.cmdSystem				= ::cmdSystem;
+	gameImport.cvarSystem				= ::cvarSystem;
+	gameImport.fileSystem				= ::fileSystem;
+	gameImport.networkSystem			= ::networkSystem;
+	gameImport.renderSystem				= ::renderSystem;
+	gameImport.soundSystem				= ::soundSystem;
+	gameImport.renderModelManager		= ::renderModelManager;
+	gameImport.uiManager				= ::uiManager;
+	gameImport.declManager				= ::declManager;
+	gameImport.AASFileManager			= ::AASFileManager;
+	gameImport.collisionModelManager	= ::collisionModelManager;
+
+	gameExport							= *GetGameAPI( &gameImport );
+
+	// Tels: The game DLL does its own check, and exits, so this check is probably never run.
+	if ( gameExport.version != GAME_API_VERSION ) {
+		Sys_DLL_Unload( gameDLL );
+		gameDLL = NULL;
+		common->FatalError( "wrong game DLL API version" );
+		return;
+	}
+
+	game								= gameExport.game;
+	gameEdit							= gameExport.gameEdit;
+
+#endif
 
 	// initialize the game object
 	if ( game != NULL ) {
@@ -2719,7 +2781,16 @@ void idCommonLocal::UnloadGameDLL( void ) {
 		game->Shutdown();
 	}
 
+#ifdef __DOOM_DLL__
 
+	if ( gameDLL ) {
+		Sys_DLL_Unload( gameDLL );
+		gameDLL = NULL;
+	}
+	game = NULL;
+	gameEdit = NULL;
+
+#endif
 }
 
 /*
